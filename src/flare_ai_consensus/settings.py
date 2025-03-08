@@ -94,7 +94,7 @@ class Settings(BaseSettings):
 
     # OpenRouter Settings
     open_router_base_url: str = "https://openrouter.ai/api/v1"
-    open_router_api_key: str = os.environ.get("OPEN_ROUTER_API_KEY")
+    open_router_api_key: str = os.environ.get("OPEN_ROUTER_API_KEY", "")
 
     # Path Settings
     data_path: Path = create_path("data")
