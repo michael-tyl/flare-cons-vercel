@@ -4,7 +4,7 @@ import os
 
 load_dotenv()
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.environ.get("CHATGPT_API_KEY"))
 
 def request_chatgpt(msg: str):
     return client.chat.completions.create(
