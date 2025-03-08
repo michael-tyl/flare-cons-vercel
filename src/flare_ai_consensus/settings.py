@@ -2,13 +2,11 @@ from pathlib import Path
 from typing import Literal, TypedDict
 
 import structlog
-import os
-from dotenv import load_dotenv
 from pydantic import BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 logger = structlog.get_logger(__name__)
-load_dotenv()
+
 
 def create_path(folder_name: str) -> Path:
     """Creates and returns a path for storing data or logs."""
@@ -94,7 +92,7 @@ class Settings(BaseSettings):
 
     # OpenRouter Settings
     open_router_base_url: str = "https://openrouter.ai/api/v1"
-    open_router_api_key: str = os.environ.get("OPEN_ROUTER_API_KEY")
+    open_router_api_key: str = ""
 
     # Path Settings
     data_path: Path = create_path("data")
