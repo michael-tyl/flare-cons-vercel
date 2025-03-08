@@ -10,8 +10,15 @@ notes on how the logistic for router, aggregator, and consensus layer works
 
 main:
 初始化setting.py里面setting类里面的open_router_api_key以及open_router_base_url
+CORSMiddleware: cross origin resource sharing指一个网页调用另外一个网页的api的
+控制协议； credentials指跨境访问时可以允许哪些凭证，比如cookie(在请求之间允许的信息)
+；methods指post, get等方法，这里是全部允许；headers是HTTP头部信息
 
+structlog用于日志记录
 
+api/ChatRouter
+settings
+utils/load_json
 
 setting.py:
 Message类有role和content
@@ -67,11 +74,88 @@ get_availables_model
 json文件的格式，里面可以存放json，字典，数组等
 
 get_model_endpoints
+一个模型可能有应对各个不同用途的接口
+
+AsyncOpenRouterProvider
+是异步函数版本的send_compoletion和send_chat_completion
+
+api/ChatRouter.py:
+pydantic定义数据模型，利用python的定义注解(冒号后面的类型定义)来定义数据结构
+Field是额外的限制条件 
+Chat Message类: (联系了llm的api, consensus learning, 以及fast api本身)
+system_message和user_message都由Field定义
+ChatRouter类
+setup里面包括唯一的post接口: self._router.post("/")
+message要符合ChatMessage类型
+定义一个initial_conversation = list[Message]里面每个元素都是Message
+使用run_consensus从llm获得返回值(params有provider, consensus_config, initial_conversation)
+
+router(self)返回router本身
+
+consensus/consensus.py:
+
+run_consens函数
+调用send_round进行initial round, 获得第一个aggregated_response
+然后每次依据initial conversation以及aggregated_response进行interation
+返回string
+
+build_improvement_conversation函数
+主要作用于conversation
+conversation是initial_conversation的shallow copy
+创立一个包含consensus.config里面aggregated_response的conversation
+同时有包含了现有的aggregated_response
+
+_get_response_for_model函数
+返回一个tuple，如果没有aggregated_responnse，
+initial_conversation加入payload，如果有使用build_improvement_conversation
+其作用主要是每次更新新的aggregated_response
+然后parse_chat_response(response)
+tuple第一个字符串是model.model_id, text是parse之后的text
+
+send_round函数(返回字典)
+ayncio.gather同时处理多个任务
+tasks是一个由get_respponnse_for_model的call构成的list, 使用gather，里面
+的星号在执行这些函数，获得了一个字典返回值
+key是tuple里面的model.model_id, value是text
 
 
+consensus/aggregator.py:
+_concatenate_aggregator函数(param是responses)
+生成model:text并且每对key和value之间有换行
 
+centralized_llm_aggregator函数
+params里面的aggregated_response是send_round返回的字典
+把aggregator_config.context这个iterable里面的每一个元素放到message list里面
+在message里面添加被_concatenate_aggregate转换为多行string的字典
+message里面加入aggregator_config.prompt里面的每个元素
 
+从api获得的json格式的response里面显然有多个choices，选取第一个choices选取message
+的value的content，这里是嵌套的字典结构
 
+async_centralized_llm_aggregator聚合多个模型的生成结果
 
+settings.py:
+create_path函数
+_file_是的路径settings的路径，path把其转换为path类型，获得其所在文件夹的绝对路径
+再到上一层目录，那么就是src
 
+Message类
+有role和content
 
+ModelConfig类
+有model_id, max_tokens, temperature
+
+AggregatorConfig类
+model, approach(centralized, vote等选择choices的方式), 
+context和prompt两者都是list[Message]
+
+ConsensusConfig类
+aggregated_propmt_type属于user assistant或者system中的一种
+从一个json文件中获取models(非aggregator)以及aggregator的参数
+返回一个cls作为新的ConsensusConfig实体
+
+Settings类
+cors_origins，允许所有的类访问
+model_config用于pydantic数据类型配置，使用utf8解码之类
+
+model_dump把setting转换为通用的字典类
