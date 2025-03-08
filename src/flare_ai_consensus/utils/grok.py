@@ -6,7 +6,7 @@ load_dotenv()
 
 client = OpenAI(api_key=os.environ.get("GROK_API_KEY"), base_url="https://api.x.ai/v1")
 
-def request_grok(msg):
+def request_grok(msg: str):
     return client.chat.completions.create(
                 messages=[{
                     "role": "user",
