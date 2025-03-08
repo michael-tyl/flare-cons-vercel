@@ -6,7 +6,7 @@ load_dotenv()
 
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-def request_gpt(msg):
+def request_gpt(msg: str):
     return client.chat.completions.create(
                 messages=[{
                     "role": "user",
