@@ -11,5 +11,3 @@ def request_gemini(msg):
                 model="gemini-2.0-flash",
                 contents=msg,
             )
-
-print(request_gemini("hello"))
