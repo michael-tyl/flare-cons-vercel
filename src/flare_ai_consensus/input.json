@@ -6,7 +6,7 @@
             "temperature": 0.7
         },
         {
-            "id": "sophosympatheia/rogue-rose-103b-v0.2:free",
+            "id": "deepseek/deepseek-r1",
             "max_tokens": 200,
             "temperature": 0.7
         },
@@ -14,12 +14,17 @@
             "id": "meta-llama/llama-3.2-3b-instruct:free",
             "max_tokens": 200,
             "temperature": 0.7
+        },
+        {
+            "id": "google/gemini-2.0-flash-001",
+            "max_tokens": 200,
+            "temperature": 0.7
         }
     ],
     "aggregator": [
         {
             "model": {
-                "id": "meta-llama/llama-3.2-3b-instruct:free",
+                "id": "google/gemini-2.0-flash-001",
                 "max_tokens": 200,
                 "temperature": 0.7
             },
