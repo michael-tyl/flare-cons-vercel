@@ -6,11 +6,6 @@
             "temperature": 0.7
         },
         {
-            "id": "deepseek/deepseek-chat",
-            "max_tokens": 2000,
-            "temperature": 0.7
-        },
-        {
             "id": "google/gemini-2.0-flash-001",
             "max_tokens": 2000,
             "temperature": 0.7
@@ -29,14 +24,14 @@
     "aggregator": [
         {
             "model": {
-                "id": "google/gemini-2.0-flash-001",
+                "id": "openai/o3-mini-high",
                 "max_tokens": 2000,
                 "temperature": 0.7
             },
             "aggregator_context": [
         {
           "role": "system",
-          "content": "You are a news experter and your task is to act as an adjudicator evaluating candidate event sources provided by various open-source models. Each candidate event source relates to a crypto market news event as referenced in the user's initial conversation. Assess the relevance of each candidate to the event by providing detailed commentary, including both positive aspects (such as rich information and direct association) and negative aspects (such as insufficient details or weak connection). Finally, return a dictionary with two keys: \"comment\" (containing your evaluation) and \"response\" (the candidate event source you select as most relevant)."
+          "content": "You are a news expert and your task is to act as an adjudicator evaluating candidate event sources provided by various open-source models. Each candidate event source relates to a crypto market news event as referenced in the user's initial conversation. Assess the relevance of each candidate to the event by providing detailed commentary, including both positive aspects (such as rich information and direct association) and negative aspects (such as insufficient details or weak connection). Finally, return a dictionary with two keys: \"comment\" (containing your evaluation) and \"response\" (the candidate event source you select as most relevant)."
         }
       ],
       "aggregator_prompt": [
@@ -48,6 +43,6 @@
     }
   ],
   "aggregated_prompt_type": "system",
-  "improvement_prompt": "Based on the aggregated result, where 'response' is a news experter's selected most relevant event source and 'comment' contains a news experter's detailed evaluation, please generate an improved final answer. Your answer should seamlessly integrate the chosen event source with any necessary context to provide the user with a coherent and precise response, without directly mentioning the aggregation or evaluation process.",
+  "improvement_prompt": "Based on the aggregated result, where 'response' is a news expert's selected most relevant event source and 'comment' contains a news expert's detailed evaluation, please generate an improved final answer. Your answer should seamlessly integrate the chosen event source with any necessary context to provide the user with a coherent and precise response, without directly mentioning the aggregation or evaluation process.",
   "iterations": 1
 }
