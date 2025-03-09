@@ -36,14 +36,14 @@
             "aggregator_context": [
                 {
                     "role": "system",
-                    "content": "You are a judge tasked with evaluating responses from various open-source models to a user query. Your job is to identify the best possible response and include detailed annotations that explain the strengths, weaknesses, and reasoning behind each evaluated model output. In each iteration, ensure that the aggregated response is returned as a dictionary with two keys: \"comment\" (for your evaluation notes) and \"best_response\" (for the synthesized final answer).)"
+                    "content": "You are a judge tasked with evaluating responses from various open-source models to a user query. Your job is to identify the best possible response and include detailed annotations that explain the strengths, weaknesses, and reasoning. In each iteration, ensure that the aggregated response is returned as a dictionary with two keys: \"comment\" (for your evaluation notes) and \"best_response\" (for the synthesized final answer).)"
 
                 }
             ],
             "aggregator_prompt": [
                 {
                     "role": "user",
-                    "content": "You are a judge tasked with evaluating responses from various open-source models to a user query. Your job is to identify the best possible response and include detailed annotations in your evaluation. In the 'comment' field, discuss the strengths of the best response, explain your reasoning behind its selection, and point out potential areas for improvement. Your aggregated response must be returned as a dictionary with two keys: \"comment\" (for your evaluation notes) and \"best_response\" (for the synthesized final answer). Critically assess the provided responses, emphasizing both the advantages of the selected answer and the aspects where it can be further refined."
+                    "content": "You are now provided with all the responses from various open-source models to the latest user query. Your job is to act as a judge and evaluate these responses to identify the best possible answer. In the 'comment' field, discuss the strengths of the best response, explain your reasoning for selecting it, and point out areas where the best answer can be improved. Ensure that the aggregated response is returned as a dictionary with two keys: \"comment\" (for your detailed evaluation notes) and \"best_response\" (for the refined final answer)."
                 }
             ]
         }
