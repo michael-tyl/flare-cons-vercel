@@ -14,7 +14,7 @@ export async function POST(req: Request) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            'system_message': 'Answer the user question',
+            'system_message': 'Answer the user question with a factual answer',
             'user_message': question
         })
     });
