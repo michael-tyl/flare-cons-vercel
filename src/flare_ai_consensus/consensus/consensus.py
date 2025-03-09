@@ -41,7 +41,7 @@ async def run_consensus(
     convergence = concatenate_embedding(get_embeddings(responses))
     print("convergence for responses" + convergence) 
     logger.info(
-        "initial response aggregation complete", aggregated_response=aggregated_response, embeddings_covergence = convergence
+        "initial response aggregation complete", aggregated_response=aggregated_response
     )
 
     response_data["iteration_0"] = responses
