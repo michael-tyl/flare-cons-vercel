@@ -7,8 +7,8 @@ import { ThemeProvider } from "next-themes"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "AI Chatbot",
-  description: "A ChatGPT-like interface built with Next.js and AI SDK",
+  title: "AI Ensemble Judge",
+  description: "A consensus learning mechanism where an ensemble of AI models combine to respond to queries.",
 }
 
 export default function RootLayout({
