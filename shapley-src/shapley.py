@@ -39,7 +39,7 @@ def shapley_estimator():
                 'user_message': msg
         })
         if not res.ok:
-            return "Error in backend"
+            return "Error in backend</br></br>Ran out of keys?"
         responses[model] = res.json()["response"]
         embeddings[model] = client.embeddings.create(input=responses[model], model="text-embedding-3-small").data[0].embedding
         effects[model] = 1 - cosine_similarity(embeddings["all"], embeddings[model])
