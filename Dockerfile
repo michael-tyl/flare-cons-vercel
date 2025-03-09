@@ -2,6 +2,9 @@
 FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS backend-builder
 ADD . /flare-ai-consensus
 WORKDIR /flare-ai-consensus
+
+RUN apt update && apt install -y python3 python3-venv
+RUN python3 -m venv /flare-ai-consensus/.venv
 RUN uv sync --frozen
 
 # Stage 2: Final Image
