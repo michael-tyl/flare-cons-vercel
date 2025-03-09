@@ -8,7 +8,6 @@ from flare_ai_consensus.router import AsyncOpenRouterProvider
 from flare_ai_consensus.settings import settings
 from flare_ai_consensus.utils import load_json
 from dotenv import load_dotenv
-
 logger = structlog.get_logger(__name__)
 load_dotenv()
 

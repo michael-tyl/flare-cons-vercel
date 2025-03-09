@@ -1,11 +1,14 @@
 import asyncio
-
+from openai import OpenAI
 import structlog
 
 from flare_ai_consensus.consensus.aggregator import async_centralized_llm_aggregator
 from flare_ai_consensus.router import AsyncOpenRouterProvider, ChatRequest
 from flare_ai_consensus.settings import ConsensusConfig, Message, ModelConfig
 from flare_ai_consensus.utils import parse_chat_response
+from flare_ai_consensus.utils.embedding import get_embeddings, concatenate_embedding
+
+
 
 logger = structlog.get_logger(__name__)
 
@@ -35,8 +38,9 @@ async def run_consensus(
     aggregated_response = await async_centralized_llm_aggregator(
         provider, consensus_config.aggregator_config, responses
     )
+    convergence = get_embeddings(responses)  
     logger.info(
-        "initial response aggregation complete", aggregated_response=aggregated_response
+        "initial response aggregation complete", aggregated_response=aggregated_response, embeddings_covergence = convergence
     )
 
     response_data["iteration_0"] = responses
@@ -50,12 +54,12 @@ async def run_consensus(
         aggregated_response = await async_centralized_llm_aggregator(
             provider, consensus_config.aggregator_config, responses
         )
+        logger.info("convergence for responses", concatenate_embedding(get_embeddings(responses)))
         logger.info(
             "responses aggregated",
             iteration=i + 1,
             aggregated_response=aggregated_response,
         )
-
         response_data[f"iteration_{i + 1}"] = responses
         response_data[f"aggregate_{i + 1}"] = aggregated_response
 
