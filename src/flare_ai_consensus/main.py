@@ -40,7 +40,14 @@ def create_app() -> FastAPI:
 
     # Load input configuration.
     config_json = load_json(settings.input_path / "input.json")
+    shapley_jsons = {}
+    shapley_jsons["all"] = load_json(settings.input_path / "all.json")
+    for model in settings.models_list:
+        shapley_jsons[model] = load_json(settings.input_path / f"{model}.json")
+        settings.load_shapley_config(shapley_jsons[model], model)
+        
     settings.load_consensus_config(config_json)
+    settings.load_shapley_config(shapley_jsons["all"], "all")
 
     # Initialize the OpenRouter provider.
     provider = AsyncOpenRouterProvider(
@@ -53,7 +60,25 @@ def create_app() -> FastAPI:
         provider=provider,
         consensus_config=settings.consensus_config,
     )
+    shapley_router = ChatRouter(
+        router=APIRouter(),
+        provider=provider,
+        consensus_config=settings.shapley_configs["all"],
+        route="all"
+    )
+
+    shapley_routers = {}
+    for model in settings.models_list:
+        shapley_routers[model] = ChatRouter(
+            router=APIRouter(),
+            provider=provider,
+            consensus_config=settings.shapley_configs[model],
+            route=model
+        )
+        app.include_router(shapley_routers[model].router, prefix=f"/api/routes/{model}", tags=[model])
+
     app.include_router(chat_router.router, prefix="/api/routes/chat", tags=["chat"])
+    app.include_router(shapley_router.router, prefix="/api/routes/all", tags=["all"])
 
     return app
 
