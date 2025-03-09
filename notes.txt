@@ -79,7 +79,7 @@ get_model_endpoints
 AsyncOpenRouterProvider
 是异步函数版本的send_compoletion和send_chat_completion
 
-api/ChatRouter.py:
+api/chat.py:
 pydantic定义数据模型，利用python的定义注解(冒号后面的类型定义)来定义数据结构
 Field是额外的限制条件 
 Chat Message类: (联系了llm的api, consensus learning, 以及fast api本身)
@@ -159,3 +159,63 @@ cors_origins，允许所有的类访问
 model_config用于pydantic数据类型配置，使用utf8解码之类
 
 model_dump把setting转换为通用的字典类
+
+
+/
+prompt logistic
+
+initial_conversation = [
+                    {"role": "system", "content": message.system_message},
+                    {"role": "user", "content": message.user_message},
+                ]
+
+answer = run_consensus(
+                    self.provider,
+                    self.consensus_config,
+                    initial_conversation,
+                )
+
+self.consensus_config: (from_json)
+    models: list[ModelConfig]
+    aggregator_config: AggregatorConfig
+    improvement_prompt: str ()
+    iterations: int
+    aggregated_prompt_type: Literal["user", "assistant", "system"]
+
+aggregator_config = AggregatorConfig(
+        model=aggregator_model,
+        approach=aggr_data.get("approach", ""), (empty right now)
+        context=aggr_data.get("aggregator_context", []), 
+        prompt=aggr_data.get("aggregator_prompt", []),
+    )
+
+centralized_llm_aggregator messages
+[aggregator_config.context
+message: role: system, content: aggregated_responses exist as str with change line
+]
+
+async_centralized_lln_aggregator messages 
+[aggregator_config.context
+message:role: system, content: aggregated_responses exist as dictionary
+aggregator_config.prompt]
+
+judge llm gets all the different responses from each llm and came back with
+a aggregated_response
+
+every iteration, different responses is from aggregated_response 
+and initial conversation(updated version) 
+initial_conversation
+role: system, content: consenses: aggregated_response
+improvement prompt
+
+different responses got send to judge and came back with aggregated_response
+
+and continues
+
+context is content when role is system
+
+
+1. figure out which model is the best aggregator
+2. optimize the prompt
+3.turn llm as a judge, determine whether the following content is wrong,
+if wrong, generate the context again

@@ -4,6 +4,9 @@ from typing import Literal, TypedDict
 import structlog
 from pydantic import BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 logger = structlog.get_logger(__name__)
 
@@ -92,7 +95,7 @@ class Settings(BaseSettings):
 
     # OpenRouter Settings
     open_router_base_url: str = "https://openrouter.ai/api/v1"
-    open_router_api_key: str = ""
+    open_router_api_key: str = os.getenv("OPENROUTER_API_KEY", "")
 
     # Path Settings
     data_path: Path = create_path("data")
