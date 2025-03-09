@@ -113,7 +113,7 @@ def main() -> None:
         base_url=settings.open_router_base_url,
     )
 
-    model_id = "qwen/qwen-vl-plus:free"
+    model_id = "google/gemini-2.0-flash-001"
 
     if args.mode == "default":
         initial_conversation = [

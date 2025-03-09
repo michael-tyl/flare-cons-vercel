@@ -19,7 +19,7 @@ if __name__ == "__main__":
         base_url=settings.open_router_base_url,
     )
     # Pick a random model_id
-    model_id = "qwen/qwen-vl-plus:free"
+    model_id = "google/gemini-2.0-flash-001"
 
     author, slug = extract_author(model_id)
     get_model_endpoints(provider, author, slug)
