@@ -107,16 +107,36 @@ class Settings(BaseSettings):
     # Consensus Settings
     consensus_config: ConsensusConfig | None = None
 
+    # Shapley Settings
+    shapley_configs: dict[str, ConsensusConfig] = {}
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
     )
 
+    models_list: list[str] = ["qwen", "gemini", "gpt", "claude", "mistral", "llama"]
+
     def load_consensus_config(self, json_data: dict) -> None:
         """Load consensus configuration from JSON data"""
         self.consensus_config = ConsensusConfig.from_json(json_data)
         logger.info("loaded consensus configuration")
+
+    def load_shapley_config(self, json_data: dict, name: str) -> None:
+        self.shapley_configs[name] = ConsensusConfig.from_json(json_data)
+    # def load_qwen_config(self, json_data: dict) -> None:
+    #     self.shapley_configs["qwen"] = ConsensusConfig.from_json(json_data)
+    # def load_gemini_config(self, json_data: dict) -> None:
+    #     self.shapley_configs["gemini"] = ConsensusConfig.from_json(json_data)
+    # def load_gpt_config(self, json_data: dict) -> None:
+    #     self.shapley_configs["gpt"] = ConsensusConfig.from_json(json_data)
+    # def load_claude_config(self, json_data: dict) -> None:
+    #     self.shapley_configs["claude"] = ConsensusConfig.from_json(json_data)
+    # def load_mistral_config(self, json_data: dict) -> None:
+    #     self.shapley_configs["mistral"] = ConsensusConfig.from_json(json_data)
+    # def load_llama_config(self, json_data: dict) -> None:
+    #     self.shapley_configs["llama"] = ConsensusConfig.from_json(json_data)
 
 
 # Create a global settings instance

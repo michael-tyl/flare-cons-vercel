@@ -33,6 +33,7 @@ class ChatRouter:
         router: APIRouter,
         provider: AsyncOpenRouterProvider,
         consensus_config: ConsensusConfig | None = None,
+        route: str = "chat"
     ) -> None:
         """
         Initialize the ChatRouter.
@@ -46,7 +47,8 @@ class ChatRouter:
         self.provider = provider
         if consensus_config:
             self.consensus_config = consensus_config
-        self.logger = logger.bind(router="chat")
+        self.logger = logger.bind(router=route)
+        self.route = route
         self._setup_routes()
 
     def _setup_routes(self) -> None:
@@ -61,7 +63,7 @@ class ChatRouter:
             Returns an aggregated response after a number of iterations.
             """
             try:
-                self.logger.debug("Received chat message", message=message.user_message)
+                self.logger.debug(f"Received chat message {self.route}", message=message.user_message)
                 # Build initial conversation
                 initial_conversation: list[Message] = [
                     {"role": "system", "content": message.system_message},

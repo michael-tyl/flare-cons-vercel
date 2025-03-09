@@ -1,0 +1,54 @@
+{
+    "models": [
+        {
+            "id": "qwen/qwen2.5-32b-instruct",
+            "max_tokens": 300,
+            "temperature": 1.0
+        },
+        {
+            "id": "google/gemini-2.0-flash-001",
+            "max_tokens": 300,
+            "temperature": 1.0
+        },
+        {
+            "id": "anthropic/claude-3.7-sonnet",
+            "max_tokens": 300,
+            "temperature": 1.0
+        },
+        {
+            "id": "mistralai/mistral-saba",
+            "max_tokens": 300,
+            "temperature": 1.0
+        },
+        {
+            "id": "meta-llama/llama-3.2-3b-instruct",
+            "max_tokens": 300,
+            "temperature": 1.0
+        }
+    ],
+    "aggregator": [
+        {
+            "model": {
+                "id": "openai/o3-mini",
+                "max_tokens": 1500,
+                "temperature": 1.0
+            },
+            "aggregator_context": [
+                {
+                    "role": "system",
+                    "content": "You are a judge tasked with evaluating responses from various open-source models to a user query. Your job is to identify the best possible response and include detailed annotations that explain the strengths, weaknesses, and reasoning. In each iteration, ensure that the aggregated response is returned as a dictionary with two keys: \"comment\" (for your evaluation notes) and \"best_response\" (for the synthesized final answer).)"
+
+                }
+            ],
+            "aggregator_prompt": [
+                {
+                    "role": "user",
+                    "content": "You are now provided with all the responses from various open-source models to the latest user query. Your job is to act as a judge and evaluate these responses to identify the best possible answer. In the 'comment' field, discuss the strengths of the best response, explain your reasoning for selecting it, and point out areas where the best answer can be improved. Ensure that the aggregated response is returned as a dictionary with two keys: \"comment\" (for your detailed evaluation notes) and \"best_response\" (for the refined final answer)."
+                }
+            ]
+        }
+    ],
+    "aggregated_prompt_type": "system",
+    "improvement_prompt": "Please provide an answer to the initial query based on the aggregated responses provided, making use of the previously selected best_response and the evaluation comment. Your answer should be a refined and improved version of the best response without directly mentioning the aggregated response or the evaluation process.",
+    "iterations": 1
+}
