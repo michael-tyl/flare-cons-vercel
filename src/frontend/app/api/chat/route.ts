@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   const question = messages[messages.length - 1].content
   console.log(question)
 
-  const result = await fetch('http://34.174.75.60:80/api/routes/chat/', {
+  const result = await fetch('http://34.174.16.226:80/api/routes/chat/', {
         method: 'POST',
         headers: {
             'accept': 'application/json',
