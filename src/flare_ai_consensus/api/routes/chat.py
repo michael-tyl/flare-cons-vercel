@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 from flare_ai_consensus.consensus import run_consensus
 from flare_ai_consensus.router import AsyncOpenRouterProvider
 from flare_ai_consensus.settings import ConsensusConfig, Message
+import json
 
 logger = structlog.get_logger(__name__)
 router = APIRouter()
@@ -73,13 +74,20 @@ class ChatRouter:
                     self.consensus_config,
                     initial_conversation,
                 )
+                answer = answer.strip() 
+                if answer.startswith("```json"):
+                    answer = answer[len("```json"):].strip()
 
+                if answer.endswith("```"):
+                    answer = answer[:-len("```")].strip()
+                json_data = json.loads(answer)
+                best_response = json_data.get("best_response", "")
             except Exception as e:
                 self.logger.exception("Chat processing failed", error=str(e))
                 raise HTTPException(status_code=500, detail=str(e)) from e
             else:
                 self.logger.info("Response generated", answer=answer)
-                return {"response": answer}
+                return {"response": best_response}
 
     @property
     def router(self) -> APIRouter:

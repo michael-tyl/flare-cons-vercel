@@ -21,7 +21,7 @@ export async function POST(req: Request) {
 
   console.log(result)
 
-    let json = await result.json()
+    const json = await result.json()
     if (json != null) {
         return new Response(json.response)
     }
