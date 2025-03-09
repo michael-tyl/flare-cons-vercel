@@ -38,8 +38,8 @@ async def run_consensus(
     aggregated_response = await async_centralized_llm_aggregator(
         provider, consensus_config.aggregator_config, responses
     )
-    convergence = concatenate_embedding(get_embeddings(responses))
-    print("convergence for responses" + convergence) 
+    # convergence = concatenate_embedding(get_embeddings(responses))
+    # print("convergence for responses" + convergence) 
     logger.info(
         "initial response aggregation complete", aggregated_response=aggregated_response
     )
@@ -55,8 +55,8 @@ async def run_consensus(
         aggregated_response = await async_centralized_llm_aggregator(
             provider, consensus_config.aggregator_config, responses
         )
-        convergence = concatenate_embedding(get_embeddings(responses))
-        print("convergence for responses" + convergence)
+        # convergence = concatenate_embedding(get_embeddings(responses))
+        # print("convergence for responses" + convergence)
         logger.info(
             "responses aggregated",
             iteration=i + 1,
