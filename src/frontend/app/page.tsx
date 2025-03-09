@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 import ReactMarkdown from "react-markdown"
 
 export default function ChatInterface() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat()
+  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({ streamProtocol: 'text' })
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [isDarkMode, setIsDarkMode] = useState(false)
 
