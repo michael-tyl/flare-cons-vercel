@@ -25,8 +25,8 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--model",
         type=str,
-        default="google/gemini-2.0-flash-001",
-        help="The model ID to use (default: google/gemini-2.0-flash-001).",
+        default="openai/o3-mini-high",
+        help="The model ID to use (default: openai/o3-mini-high).",
     )
     return parser.parse_args()
 

@@ -19,7 +19,7 @@ if __name__ == "__main__":
         base_url=settings.open_router_base_url,
     )
     # Pick a random model_id
-    model_id = "google/gemini-2.0-flash-001"
+    model_id = "openai/o3-mini-high"
 
     author, slug = extract_author(model_id)
     get_model_endpoints(provider, author, slug)

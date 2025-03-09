@@ -113,7 +113,7 @@ def main() -> None:
         base_url=settings.open_router_base_url,
     )
 
-    model_id = "google/gemini-2.0-flash-001"
+    model_id = "openai/o3-mini-high"
 
     if args.mode == "default":
         initial_conversation = [
