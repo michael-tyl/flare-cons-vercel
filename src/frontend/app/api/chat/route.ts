@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   const question = messages[messages.length - 1].content
   console.log(question)
 
-  const result = fetch('http://localhost:80/api/routes/chat/', {
+  const result = await fetch('http://localhost:80/api/routes/chat/', {
         method: 'POST',
         headers: {
             'accept': 'application/json',
@@ -20,7 +20,11 @@ export async function POST(req: Request) {
     });
 
   console.log(result)
-  
-  return result
+
+    let json = await result.json()
+    if (json != null) {
+        return new Response(json.response)
+    }
+    return new Response()
 }
 
