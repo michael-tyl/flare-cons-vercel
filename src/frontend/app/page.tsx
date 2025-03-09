@@ -29,7 +29,7 @@ export default function ChatInterface() {
       <header className="flex items-center justify-between p-4 border-b dark:border-gray-700">
         <div className="flex items-center">
           <Bot className="w-6 h-6 mr-2 text-primary" />
-          <h1 className="text-xl font-bold">AI Chatbot</h1>
+          <h1 className="text-xl font-bold">AI Ensemble Judge</h1>
         </div>
         <Button variant="ghost" size="icon" onClick={toggleDarkMode} aria-label="Toggle dark mode">
           {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
